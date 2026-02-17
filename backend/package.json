@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/schedule": "^6.1.0",
     "@nestjs/typeorm": "^11.0.0",
+    "@supabase/supabase-js": "^2.95.3",
     "@types/cron": "^2.0.1",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",

@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000', // Update if deployed
+    baseURL: 'http://localhost:3001', // Update if deployed
     headers: {
         'Content-Type': 'application/json',
     },
@@ -26,7 +26,7 @@ api.interceptors.response.use(
 
             if (refreshToken) {
                 try {
-                    const res = await axios.post('http://localhost:3000/auth/refresh', { refresh_token: refreshToken });
+                    const res = await axios.post('http://localhost:3001/auth/refresh', { refresh_token: refreshToken });
                     if (res.status === 201 || res.status === 200) {
                         const { access_token, refresh_token } = res.data;
                         Cookies.set('token', access_token);

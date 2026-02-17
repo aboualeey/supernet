@@ -9,6 +9,7 @@ import { VpnModule } from './vpn/vpn.module';
 import { ServersModule } from './servers/servers.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PaymentsModule } from './payments/payments.module';
+import { SupabaseModule } from './supabase/supabase.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PaymentsModule } from './payments/payments.module';
     ServersModule,
     SubscriptionsModule,
     PaymentsModule,
+    SupabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
