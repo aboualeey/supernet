@@ -17,6 +17,10 @@ export class Plan {
     @Column({ nullable: true })
     bandwidthLimitGb: number;
 
+    /** Max WireGuard peers this plan allows. FREE=1, PRO=3, TEAM=10 */
+    @Column({ default: 1 })
+    maxDevices: number;
+
     @Column({ default: true })
     isActive: boolean;
 

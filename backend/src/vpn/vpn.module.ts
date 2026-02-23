@@ -4,6 +4,8 @@ import { VpnService } from './vpn.service';
 import { VpnController } from './vpn.controller';
 import { VpnProfile } from './entities/vpn-profile.entity';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
+import { WgWatcherService } from './wg-watcher.service';
+import { TelemetryService } from './telemetry.service';
 
 @Module({
   imports: [
@@ -11,7 +13,7 @@ import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
     SubscriptionsModule,
   ],
   controllers: [VpnController],
-  providers: [VpnService],
-  exports: [VpnService],
+  providers: [VpnService, WgWatcherService, TelemetryService],
+  exports: [VpnService, WgWatcherService, TelemetryService],
 })
 export class VpnModule { }

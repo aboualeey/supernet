@@ -10,6 +10,7 @@ import { ServersModule } from './servers/servers.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PaymentsModule } from './payments/payments.module';
 import { SupabaseModule } from './supabase/supabase.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { SupabaseModule } from './supabase/supabase.module';
     SubscriptionsModule,
     PaymentsModule,
     SupabaseModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

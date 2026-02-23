@@ -1,12 +1,16 @@
 import { Controller, Post, Body, UseGuards, Get, Request, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from '../common/dtos/create-user.dto';
 import { LoginDto } from '../common/dtos/login.dto';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        private readonly usersService: UsersService,
+    ) { }
 
     @Post('login')
     async login(@Body() req: LoginDto) {
@@ -43,7 +47,13 @@ export class AuthController {
 
     @UseGuards(AuthGuard('jwt'))
     @Get('profile')
-    getProfile(@Request() req) {
-        return req.user;
+    async getProfile(@Request() req) {
+        // Return fresh user data from DB to reflect admin changes immediately
+        const user = await this.usersService.findOne(req.user.userId);
+        if (!user) throw new UnauthorizedException();
+
+        // Exclude sensitive fields manually as we are using raw user entity here
+        const { password, currentHashedRefreshToken, ...result } = user;
+        return result;
     }
 }

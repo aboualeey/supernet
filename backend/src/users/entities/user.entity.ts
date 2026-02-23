@@ -19,7 +19,7 @@ export class User {
     @Column({ nullable: true })
     name: string;
 
-    @Column({ nullable: true, select: false })
+    @Column({ nullable: true, select: false, type: 'varchar' })
     currentHashedRefreshToken: string | null;
 
     @Column({
@@ -31,6 +31,9 @@ export class User {
 
     @Column({ default: true })
     isActive: boolean;
+
+    @Column({ default: false })
+    privateGatewayAllowed: boolean;
 
     @CreateDateColumn()
     createdAt: Date;

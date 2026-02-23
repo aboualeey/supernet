@@ -20,7 +20,7 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const { accessToken, refreshToken } = this.getTokens(user.id, user.email, user.role);
+        const { accessToken, refreshToken } = this.getTokens(user.id, user.email, user.role, user.privateGatewayAllowed);
         await this.usersService.setCurrentRefreshToken(refreshToken, user.id);
         return {
             access_token: accessToken,
@@ -28,7 +28,8 @@ export class AuthService {
             user: {
                 id: user.id,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                privateGatewayAllowed: user.privateGatewayAllowed,
             }
         };
     }
@@ -37,8 +38,8 @@ export class AuthService {
         return this.usersService.create(user);
     }
 
-    getTokens(userId: string, email: string, role: string) {
-        const payload = { email, sub: userId, role };
+    getTokens(userId: string, email: string, role: string, privateGatewayAllowed: boolean) {
+        const payload = { email, sub: userId, role, privateGatewayAllowed };
         const accessToken = this.jwtService.sign(payload, {
             secret: process.env.JWT_SECRET,
             expiresIn: '15m'
@@ -54,7 +55,7 @@ export class AuthService {
         const user = await this.usersService.getUserIfRefreshTokenMatches(refreshToken, userId);
         if (!user) throw new UnauthorizedException('Access Denied');
 
-        const tokens = this.getTokens(user.id, user.email, user.role);
+        const tokens = this.getTokens(user.id, user.email, user.role, user.privateGatewayAllowed);
         await this.usersService.setCurrentRefreshToken(tokens.refreshToken, user.id);
         return {
             access_token: tokens.accessToken,
